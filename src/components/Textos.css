@@ -1,0 +1,48 @@
+.container {
+    background-color: rgb(116, 155, 152);
+    display: flex;
+    margin: 15px;
+    padding: 10px;
+    border-radius: 15px;
+    justify-content: space-between;
+  }
+  
+  .container .informacion {
+    padding: 10px;
+    font-size: 15px;
+    font-style: oblique;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+  }
+  
+  .informacion .nombre {
+    font-size: 23px;
+    font-weight: bold;
+  }
+  
+  .informacion .gender {
+    font-size: 20px;
+    font-weight: bold;
+  }
+  
+  .container img,
+  .container video {
+    background-color: rgb(75, 110, 107);
+    border-radius: 40px;
+    height: 100px;
+    width: 100px;
+    border-style: ridge;
+  }
+  
+  .container .removeBtn {
+    color: rgb(212, 182, 182);
+    padding-top: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    height: 30px;
+    background-color: rgb(100, 97, 97);
+    margin-top: 10px;
+    border-radius: 20px;
+  }
