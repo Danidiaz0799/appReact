@@ -8,7 +8,7 @@ export default function App() {
 
   const getData = async () => {
     try {
-      const res = await fetch("http://localhost:8080/users");
+      const res = await fetch("https://demoreact12345.herokuapp.com/users");
       const json = await res.json();
       setUsers(json._embedded.users);
     } catch (err) {
@@ -39,7 +39,7 @@ export default function App() {
 
   const addNewRandomUser = async (userData) => {
     try {
-      const res = await fetch("http://localhost:8080/users", {
+      const res = await fetch("https://demoreact12345.herokuapp.com/users", {
         method: "POST",
         body: JSON.stringify(userData),
         headers: { "Content-type": "application/json; charset=UTF-8" }
