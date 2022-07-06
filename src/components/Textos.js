@@ -1,7 +1,20 @@
 import "./Textos.css";
+import Modal from "react-modal";
+import React, { useState } from "react";
+import NewUserForm from "./NewUserForm";
 
-export default function Textos({ user, onDelete }) {
+export default function Textos({ user, onDelete, updateUI}) {
   const { id, firstName, lastName, avatar, email, gender } = user;
+  const [isViewModalOpen, setIsViewModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
+  const toggleViewMoreModal = () => {
+    setIsViewModalOpen(!isViewModalOpen);
+  };
+
+  const toggleEditModal = () => {
+    setIsEditModalOpen(!isEditModalOpen);
+  };
 
   const renderAvatar = () => {
     if (avatar?.split(".").pop() === "mp4") {
@@ -11,7 +24,7 @@ export default function Textos({ user, onDelete }) {
         </video>
       );
     }
-    return <img src={avatar} alt={`Avatar picture for ${firstName}`} />;
+    return <img src={avatar} alt={'Avatar'} />;
   };
   return (
     <div className="container">
@@ -32,10 +45,46 @@ export default function Textos({ user, onDelete }) {
         >
           Remove
         </div>
-        <div>
-          Editar
+        <div
+          className="viewMoreBtn"
+          onClick={() => {
+            toggleViewMoreModal();
+          }}
+        >
+          View More
+        </div>
+        <div
+          className="editBtn"
+          onClick={() => {
+            toggleEditModal();
+          }}
+        >
+          Edit
         </div>
       </div>
+      <Modal isOpen={isViewModalOpen} onRequestClose={toggleViewMoreModal}>
+        <h1>user info</h1>
+        <h2>
+          {firstName} {lastName}
+        </h2>
+        <div>Email: {email}</div>
+        <div>Genero: {gender}</div>
+        <div
+          onClick={() => {
+            toggleViewMoreModal();
+          }}
+        >
+          Close modal
+        </div>
+      </Modal>
+      <Modal isOpen={isEditModalOpen} onRequestClose={toggleEditModal}>
+        <h1>edit user modal</h1>
+        <NewUserForm
+          user={user}
+          onClose={toggleEditModal}
+          updateUI={updateUI}
+        />
+      </Modal>
     </div>
   );
 }

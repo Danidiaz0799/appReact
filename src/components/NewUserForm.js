@@ -1,13 +1,12 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import "./NewUserForm.css";
 
-export default function NewUserForm({ onNewUser }) {
-  const [firstName, setFirstName] = useState();
-  const [lastName, setLastName] = useState();
-  const [gender, setGender] = useState(null);
-  const [email, setEmail] = useState();
-  const [avatarURL, setAvatarURL] = useState();
-
+export default function NewUserForm({ onNewUser, user, onClose, updateUI }) {
+  const [firstName, setFirstName] = useState(user?.firstName);
+  const [lastName, setLastName] = useState(user?.lastName);
+  const [gender , setGender] = useState(user?.gender || null);
+  const [email , setEmail] = useState(user?.email);
+  const [avatarURL, setAvatarURL] = useState(user?.avatar);
   const genders = ["Male", "Female"];
 
   const addNewUser = () => {
@@ -19,6 +18,30 @@ export default function NewUserForm({ onNewUser }) {
       avatar: avatarURL
     });
   };
+
+  const editUserApi = async () => {
+    const newUserUpdated = {
+      firstName,
+      lastName,
+      gender,
+      email,
+      avatar: avatarURL
+    };
+    try {
+      const res = await fetch(user._links.usuario.href, {
+        method: "PUT",
+        body: JSON.stringify(newUserUpdated),
+        headers: { "Content-type": "application/json; charset=UTF-8" }
+      });
+      if (res) {
+        onClose();
+        updateUI();
+      }
+    } catch (err) {
+      console.log("ERROR:", err.message);
+    }
+  };
+
   return (
     <>
       <form>
@@ -70,9 +93,14 @@ export default function NewUserForm({ onNewUser }) {
           <label>
             Gender:
             <select name="gender" onChange={(e) => setGender(e.target.value)}>
-              <option disabled selected={gender === null}>
-                Pick a gender
-              </option>
+              {user?.gender !== null ? (
+                <option selected>{user?.gender}</option>
+              ) : null}
+              {!user?.gender ? (
+                <option disabled selected={gender === null}>
+                  Pick a gender
+                </option>
+              ) : null}
               {genders.map((g) => (
                 <option value={g} selected={gender === g}>
                   {g}
@@ -82,7 +110,14 @@ export default function NewUserForm({ onNewUser }) {
           </label>
         </div>
       </form>
-      <button onClick={addNewUser}>Add</button>
+      {!user ? (
+        <button onClick={() => addNewUser()}>Add</button>
+      ) : (
+        <>
+          <button onClick={() => editUserApi()}>Edit</button>
+          <button onClick={() => onClose()}>Close</button>
+        </>
+      )}
     </>
   );
 }

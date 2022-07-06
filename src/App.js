@@ -1,6 +1,6 @@
 import "./styles.css";
 import Textos from "./components/Textos";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import NewUserForm from "./components/NewUserForm";
 
 export default function App() {
@@ -9,6 +9,7 @@ export default function App() {
   const getData = async () => {
     try {
       const res = await fetch("https://demoreact12345.herokuapp.com/users");
+      console.log(res);
       const json = await res.json();
       setUsers(json._embedded.users);
     } catch (err) {
@@ -60,6 +61,7 @@ export default function App() {
           key={user._links.usuario.href}
           user={user}
           onDelete={removeUser}
+          updateUI={getData}
         />
       );
     });
