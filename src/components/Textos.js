@@ -4,7 +4,7 @@ export default function Textos({ user, onDelete }) {
   const { id, firstName, lastName, avatar, email, gender } = user;
 
   const renderAvatar = () => {
-    if (avatar.split(".").pop() === "mp4") {
+    if (avatar?.split(".").pop() === "mp4") {
       return (
         <video autoPlay loop muted>
           <source src={avatar} type="video/mp4" />
@@ -31,6 +31,9 @@ export default function Textos({ user, onDelete }) {
           }}
         >
           Remove
+        </div>
+        <div>
+          Editar
         </div>
       </div>
     </div>
