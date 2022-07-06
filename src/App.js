@@ -5,53 +5,63 @@ import NewUserForm from "./components/NewUserForm";
 
 export default function App() {
   const [users, setUsers] = useState(null);
-  const [id, setId] = useState(null);
-  const [dataApi, setDataApi] = useState();
+
+  const getData = async () => {
+    try {
+      const res = await fetch("http://localhost:8080/users");
+      const json = await res.json();
+      setUsers(json._embedded.users);
+    } catch (err) {
+      console.log("ERROR:", err.message);
+    }
+  };
+
   // Ejecuta esta funcion cuando se dibuja el componente la primera vez
   // MOUNT
-
   useEffect(() => {
-    const getData = () => {
-      // Solicitud GET (Request).
-      fetch("http://localhost:8080/users")
-        // Exito
-        .then((response) => response.json()) // convertir a json
-        .then((json) => setDataApi(json._embedded.users)) // guardamos datos en el estado
-        .catch((err) => console.log("Solicitud fallida", err)); // Capturar errores
-    };
-    if (!dataApi) {
+    if (!users) {
       getData();
     }
   }, []);
 
-  console.log(dataApi);
-
-  // Ejecuta esta funcion cuando el valor users cambie
-  useEffect(() => {
-    if (dataApi) {
-      setUsers(dataApi);
-      setId(dataApi.length + 1);
+  const removeUser = async (id) => {
+    try {
+      const res = await fetch(id, {
+        method: "DELETE"
+      });
+      if (res) {
+        getData();
+      }
+    } catch (err) {
+      console.log("ERROR:", err.message);
     }
-  }, [dataApi]);
-
-  const removeUser = (id) => {
-    const filteredUsers = users.filter((user) => user.id !== id);
-    setUsers(filteredUsers);
   };
 
-  const addNewRandomUser = (userData) => {
-    setId(id + 1);
-    const newUser = {
-      id: id,
-      ...userData
-    };
-    setUsers([newUser, ...users]);
+  const addNewRandomUser = async (userData) => {
+    try {
+      const res = await fetch("http://localhost:8080/users", {
+        method: "POST",
+        body: JSON.stringify(userData),
+        headers: { "Content-type": "application/json; charset=UTF-8" }
+      });
+      if (res) {
+        getData();
+      }
+    } catch (err) {
+      console.log("ERROR:", err.message);
+    }
   };
 
   const renderUsers = () => {
     if (users === null) return null;
     return users.map((user) => {
-      return <Textos key={user.id} user={user} onDelete={removeUser} />;
+      return (
+        <Textos
+          key={user._links.usuario.href}
+          user={user}
+          onDelete={removeUser}
+        />
+      );
     });
   };
 

@@ -27,7 +27,7 @@ export default function Textos({ user, onDelete }) {
         <div
           className="removeBtn"
           onClick={() => {
-            onDelete(id);
+            onDelete(user._links.usuario.href);
           }}
         >
           Remove

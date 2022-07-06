@@ -12,8 +12,8 @@ export default function NewUserForm({ onNewUser }) {
 
   const addNewUser = () => {
     onNewUser({
-      first_name: firstName,
-      last_name: lastName,
+      firstName: firstName,
+      lastName: lastName,
       gender: gender,
       email: email,
       avatar: avatarURL
