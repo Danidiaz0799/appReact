@@ -36,7 +36,7 @@
     border-style: ridge;
   }
   
-  .container .removeBtn {
+  .container .removeBtn, .viewMoreBtn, .editBtn {
     color: rgb(212, 182, 182);
     padding-top: 5px;
     font-size: 1rem;
