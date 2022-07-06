@@ -67,7 +67,7 @@ export default function App() {
 
   return (
     <div className="App">
-      <h1>Listado de usuarios</h1>
+      <h1>Usuarios</h1>
       <NewUserForm onNewUser={addNewRandomUser} />
       <div className="containers">{renderUsers()}</div>
     </div>
