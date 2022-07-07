@@ -22,6 +22,10 @@ export default function App() {
     }
   };
 
+  useEffect(() => {
+    getData();
+  }, [query]);
+
   // Ejecuta esta funcion cuando se dibuja el componente la primera vez
   // MOUNT
   useEffect(() => {
