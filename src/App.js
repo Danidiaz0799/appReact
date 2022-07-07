@@ -11,7 +11,7 @@ export default function App() {
     try {
       let url = "https://demoreact12345.herokuapp.com/users";
       if(query !== ""){
-        url += `/search/findByLastNameLike?name=${query}`;
+        url += `/search/findByFirstNameContainsOrLastNameContains?firstName=${query}&lastName=${query}`;
       }
       const res = await fetch(url);
       console.log(res);
