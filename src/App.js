@@ -1,11 +1,12 @@
 import "./styles.css";
 import Textos from "./components/Textos";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import NewUserForm from "./components/NewUserForm";
 
 export default function App() {
   const [users, setUsers] = useState(null);
   const [query, setQuery] = useState("");
+  const tm = useRef();
 
   const getData = async () => {
     try {
@@ -14,7 +15,6 @@ export default function App() {
         url += `/search/findByFirstNameContainsOrLastNameContains?firstName=${query}&lastName=${query}`;
       }
       const res = await fetch(url);
-      console.log(res);
       const json = await res.json();
       setUsers(json._embedded.users);
     } catch (err) {
@@ -23,7 +23,11 @@ export default function App() {
   };
 
   useEffect(() => {
-    getData();
+    //Debounce
+    clearTimeout(tm.current);
+    tm.current = setTimeout(() => {
+      getData();
+    }, 150);
   }, [query]);
 
   // Ejecuta esta funcion cuando se dibuja el componente la primera vez
