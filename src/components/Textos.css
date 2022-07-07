@@ -50,4 +50,21 @@
 
   .modal1, .modal2 {
     background-color: bisque;
+    width: 400px;
+    height: 400px;
+    position: absolute;
+    left: 50%;
+    top: 50%; 
+    margin-left: -250px;
+    margin-top: -200px;
+    padding: 20px;
+    border-color: black;
+  }
+
+  .cerrarBtn {
+    background-color: rgb(209, 188, 162);
+    margin: 0 auto;
+    text-align: left;
+    width: 50px;
+    padding: 10px;
   }

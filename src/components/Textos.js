@@ -51,7 +51,7 @@ export default function Textos({ user, onDelete, updateUI}) {
             toggleViewMoreModal();
           }}
         >
-          View More
+          Detalles
         </div>
         <div
           className="editBtn"
@@ -59,7 +59,7 @@ export default function Textos({ user, onDelete, updateUI}) {
             toggleEditModal();
           }}
         >
-          Edit
+          Editar
         </div>
       </div>
       <Modal isOpen={isViewModalOpen} onRequestClose={toggleViewMoreModal} className="modal1" >
@@ -73,12 +73,13 @@ export default function Textos({ user, onDelete, updateUI}) {
           onClick={() => {
             toggleViewMoreModal();
           }}
+          className="cerrarBtn"
         >
-          Close modal
+          Cerrar
         </div>
       </Modal>
       <Modal isOpen={isEditModalOpen} onRequestClose={toggleEditModal} className="modal2">
-        <h1>edit user modal</h1>
+        <h1>Editar Usuario</h1>
         <NewUserForm
           user={user}
           onClose={toggleEditModal}
