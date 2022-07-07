@@ -5,10 +5,15 @@ import NewUserForm from "./components/NewUserForm";
 
 export default function App() {
   const [users, setUsers] = useState(null);
+  const [query, setQuery] = useState("");
 
   const getData = async () => {
     try {
-      const res = await fetch("https://demoreact12345.herokuapp.com/users");
+      let url = "https://demoreact12345.herokuapp.com/users";
+      if(query !== ""){
+        url += `/search/findByLastNameLike?name=${query}`;
+      }
+      const res = await fetch(url);
       console.log(res);
       const json = await res.json();
       setUsers(json._embedded.users);
@@ -71,6 +76,16 @@ export default function App() {
     <div className="App">
       <h1>Usuarios Course</h1>
       <NewUserForm onNewUser={addNewRandomUser} />
+      <div>
+        <input
+        type="text"
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}>
+        </input>
+        <button type="button" onClick={getData}>
+          Search
+        </button>
+      </div>
       <div className="containers">{renderUsers()}</div>
     </div>
   );

@@ -62,7 +62,7 @@ export default function Textos({ user, onDelete, updateUI}) {
           Edit
         </div>
       </div>
-      <Modal isOpen={isViewModalOpen} onRequestClose={toggleViewMoreModal}>
+      <Modal isOpen={isViewModalOpen} onRequestClose={toggleViewMoreModal} className="modal1" >
         <h1>user info</h1>
         <h2>
           {firstName} {lastName}
@@ -77,7 +77,7 @@ export default function Textos({ user, onDelete, updateUI}) {
           Close modal
         </div>
       </Modal>
-      <Modal isOpen={isEditModalOpen} onRequestClose={toggleEditModal}>
+      <Modal isOpen={isEditModalOpen} onRequestClose={toggleEditModal} className="modal2">
         <h1>edit user modal</h1>
         <NewUserForm
           user={user}
